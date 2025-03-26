@@ -5,6 +5,8 @@ from constants import PLAYER_TURN_SPEED
 from constants import PLAYER_SPEED
 
 class Player(CircleShape):
+	#containers = ()
+
 	def __init__(self, x, y):
 		super().__init__(x, y, PLAYER_RADIUS)
 		self.rotation = 0
