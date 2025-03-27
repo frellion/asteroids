@@ -1,5 +1,7 @@
 import pygame
+import random
 from circleshape import *
+from constants import ASTEROID_MIN_RADIUS
 
 class Asteroid(CircleShape):
 	def __init__(self, x, y, radius):
@@ -10,3 +12,17 @@ class Asteroid(CircleShape):
 
 	def update(self, dt):
 		self.position += self.velocity * dt
+
+	def split(self):
+		self.kill() #killed object's parameters are still accessible? Needs to be cleaned up?
+		if self.radius <= ASTEROID_MIN_RADIUS:
+			return
+		else:
+			angle = random.uniform(20,50)
+			vector1 = self.velocity.rotate(angle)
+			vector2 = self.velocity.rotate(angle * -1)
+			new_radius = self.radius - ASTEROID_MIN_RADIUS
+			asteroid1 = Asteroid(self.position.x, self.position.y, new_radius)
+			asteroid1.velocity = vector1 * 1.2
+			asteroid2 = Asteroid(self.position.x, self.position.y, new_radius)
+			asteroid2.velocity = vector2 * 1.2
